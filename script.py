@@ -1,4 +1,4 @@
-import os
+import os, sys
 from PIL import Image
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -14,7 +14,7 @@ def linkToBase64(link):
 
 PATH="C:\Program Files (x86)\chromedriver.exe"
 driver = webdriver.Chrome(PATH)
-username=input("Enter User Name: ")
+username=sys.argv[1]
 initURL="https://www.snapchat.com/add/"+username
 os.makedirs(username)
 driver.get(initURL)
