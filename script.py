@@ -1,5 +1,4 @@
 import os, sys
-from PIL import Image
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import requests,base64
@@ -27,7 +26,7 @@ count=int(link[link.index('_')+1:-11])
 part1=link[:link.index('_')]
 part2=(link[-11:])
 
-for i in range(0,3):
+for i in range(0,count):
     link=linkToBase64(part1+'_'+str(i)+part2)
     link2="https://cf-st.sc-cdn.net/aps/snap_bitmoji/"+link+"._Fmpng"
     
