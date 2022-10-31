@@ -7,9 +7,8 @@ But there is an official web based tool<br></br>https://webbreacher.github.io/os
 
 <br></br>
 Dependencies
-<br></br>
-selenium
-<br></br>
+1. Selenium
+2. Python
 ```
 pip install selenium
 ```
