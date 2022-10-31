@@ -8,6 +8,6 @@ But there is an official web based tool https://webbreacher.github.io/osinttools
 
 To use my tool just download download script.py file.
 and run by this command in terminal
-'''
+```
 script.py username
-'''
+```
