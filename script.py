@@ -14,7 +14,7 @@ def linkToBase64(link):
 
 PATH="C:\Program Files (x86)\chromedriver.exe"
 driver = webdriver.Chrome(PATH)
-username=input("Enter User Name")
+username=input("Enter User Name: ")
 initURL="https://www.snapchat.com/add/"+username
 os.makedirs(username)
 driver.get(initURL)
