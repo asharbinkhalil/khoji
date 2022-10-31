@@ -12,13 +12,10 @@ Dependencies
 ```
 pip install selenium
 ```
-<br></br>
 You need selenium fully setup to run this script which include webdrivers of browser.
 <br></br>
 Watch this [Youtube Tutorial](https://www.youtube.com/watch?v=Xjv1sY630Uc&list=PLzMcBGfZo4-n40rB1XaJ0ak1bemvlqumQ) for full setup details of selenium.
-<br></br>
 To use my tool just download download script.py file.
-<br></br>
 Run by this command in terminal
 ```
 script.py username
