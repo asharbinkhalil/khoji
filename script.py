@@ -18,7 +18,9 @@ def func(username):
     driver.set_window_position(-10000,0)
 
     initURL="https://www.snapchat.com/add/"+username
-    shutil.rmtree(username, ignore_errors=False)
+    isExist = os.path.exists(username)
+    if isExist:
+        shutil.rmtree(username, ignore_errors=False)
     os.makedirs(username)
     driver.get(initURL)
     l=driver.find_element(By.CSS_SELECTOR, "picture[class='css-15e7yeh']")
