@@ -14,8 +14,9 @@ def linkToBase64(link):
 def func(username):
     options = webdriver.ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    options.add_argument("--headless")
     driver = webdriver.Chrome(options=options)
-    driver.set_window_position(-10000,0)
+    #driver.set_window_position(-10000,0)
 
     initURL="https://www.snapchat.com/add/"+username
     isExist = os.path.exists(username)
@@ -26,7 +27,6 @@ def func(username):
     l=driver.find_element(By.CSS_SELECTOR, "picture[class='css-15e7yeh']")
     l=l.find_element(By.CSS_SELECTOR, "source")
     link = l.get_attribute("srcset")
-
     count=int(link[link.index('_')+1:-11])
     part1=link[:link.index('_')]
     part2=(link[-11:])
