@@ -7,7 +7,6 @@ This is a brilliant discovery by Micah Hoffman and Sir Griffin.
 I didn't knew about any tool doing this while i was writing this script.
 But there is an official web based tool<br></br>https://webbreacher.github.io/osinttools/ by Micah Hoffman. You can check out.
 
-
 <br></br>
 Dependencies
 1. Selenium
