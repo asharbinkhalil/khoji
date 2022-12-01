@@ -1,4 +1,4 @@
-import os, sys,shutil
+import os,shutil
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import requests,base64
@@ -57,9 +57,9 @@ if __name__== "__main__":
     |/\'..' /        |  '.'                            __.'   '  .''.-'  /  
     '  `'-'`         |   /                            |      '   .'   \_.'   
                     `'-'                             |____.'                
-                    
-    Description: 
-    \t\tThis script get all previous emojis and save in a directory named by username
+                
+                
+    This script get all previous bitmoji's and save in a directory named by username
     """
     parser = argparse.ArgumentParser(description)
     parser.add_argument("-u", "--Username", help = "To Query the Username")
