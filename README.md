@@ -36,5 +36,5 @@ Watch this [Youtube Tutorial](https://www.youtube.com/watch?v=Xjv1sY630Uc&list=P
 To use my tool just download  script.py file.
 Run by this command in terminal
 ```
-py .\script.py -u username
+py script.py -u username
 ```
