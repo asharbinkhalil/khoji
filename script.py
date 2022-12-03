@@ -41,7 +41,6 @@ def func(username):
     images = [i for i in os.listdir(os.getcwd()) if i.endswith(".jpg")]
     dpix = dpiy = 300
     layout_fun = img2pdf.get_fixed_dpi_layout_fun((dpix, dpiy))
-    
     with open("../"+username+".pdf", "wb") as f:
         f.write(img2pdf.convert(images,layout_fun=layout_fun))
     os.chdir("../")
