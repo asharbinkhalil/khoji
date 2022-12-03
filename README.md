@@ -23,7 +23,7 @@ pip install selenium
 ```
 or run
 ```
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 You need selenium fully setup to run this script which include webdrivers of browser.
