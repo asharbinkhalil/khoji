@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import requests,base64
 import argparse
-
+import img2pdf
 def linkToBase64(link):
     sample_string_bytes = link.encode("ascii")
     base64_bytes = base64.b64encode(sample_string_bytes)
@@ -16,11 +16,9 @@ def func(username):
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     options.add_argument("--headless")
     driver = webdriver.Chrome(options=options)
-    #driver.set_window_position(-10000,0)
-
+    
     initURL="https://www.snapchat.com/add/"+username
-    isExist = os.path.exists(username)
-    if isExist:
+    if os.path.exists(username):
         shutil.rmtree(username, ignore_errors=False)
     os.makedirs(username)
     driver.get(initURL)
@@ -38,13 +36,23 @@ def func(username):
         if response.status_code == 200:
             with open(username+"\picture"+str(i)+".jpg", 'wb') as f:
                 f.write(response.content)
-        
+                
+    os.chdir(username)
+    images = [i for i in os.listdir(os.getcwd()) if i.endswith(".jpg")]
+    dpix = dpiy = 300
+    layout_fun = img2pdf.get_fixed_dpi_layout_fun((dpix, dpiy))
+    
+    with open("../"+username+".pdf", "wb") as f:
+        f.write(img2pdf.convert(images,layout_fun=layout_fun))
+    os.chdir("../")
+    shutil.rmtree(username, ignore_errors=False)
     driver.close()
+    print("\t\t\tThank you for using khoji")
+    print("\t\t\tPrevious Bitmoji's count is "+str(count))
+    print("\t\t\tPrevious Bitmoji's of "+username+" are saved in "+username+".pdf")
     
 if __name__== "__main__":
     description = """
-
-
 
             ██╗  ██╗██╗  ██╗ ██████╗      ██╗██╗
             ██║ ██╔╝██║  ██║██╔═══██╗     ██║██║
@@ -53,9 +61,7 @@ if __name__== "__main__":
             ██║  ██╗██║  ██║╚██████╔╝╚█████╔╝██║
             ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚════╝ ╚═╝
                                                 
-
-                
-    This script get all previous bitmoji's and save in a directory named by username
+    This script get all previous bitmoji's and save in a pdf file named by username.pdf
     """
     parser = argparse.ArgumentParser(description)
     parser.add_argument("-u", "--Username", help = "To Query the Username")
