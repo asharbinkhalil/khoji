@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 import requests,base64
 import argparse
 import img2pdf
+import time
+from concurrent.futures import ThreadPoolExecutor
 def linkToBase64(link):
     sample_string_bytes = link.encode("ascii")
     base64_bytes = base64.b64encode(sample_string_bytes)
@@ -22,13 +24,14 @@ def func(username):
         shutil.rmtree(username, ignore_errors=False)
     os.makedirs(username)
     driver.get(initURL)
-    l=driver.find_element(By.CSS_SELECTOR, "picture[class='css-15e7yeh']")
+    l=driver.find_element(By.CSS_SELECTOR, "#__next > div.UserProfile_desktopContainer__8OPO2 > main > div.DesktopUserProfile_desktopContainer__P1spp > div.UserCard_container__A4JCG > div.UserCard_bitmojiWrapperDesktop___UoFX > div > div.Bitmoji3DImage_webPImageWrapper__2iKuB.Bitmoji3DImage_avatarImageStyle__dry55 > picture")
     l=l.find_element(By.CSS_SELECTOR, "source")
     link = l.get_attribute("srcset")
     count=int(link[link.index('_')+1:-11])
     part1=link[:link.index('_')]
     part2=(link[-11:])
     
+    pool =ThreadPoolExecutor(count)
     for i in range(0,count):
         link=linkToBase64(part1+'_'+str(i)+part2)
         link2="https://cf-st.sc-cdn.net/aps/snap_bitmoji/"+link+"._Fmpng"
@@ -36,6 +39,7 @@ def func(username):
         if response.status_code == 200:
             with open(username+"\picture"+str(i)+".jpg", 'wb') as f:
                 f.write(response.content)
+
                 
     os.chdir(username)
     images = [i for i in os.listdir(os.getcwd()) if i.endswith(".jpg")]
