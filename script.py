@@ -65,6 +65,7 @@ if __name__== "__main__":
             ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚════╝ ╚═╝
                                                 
     This script get all previous bitmoji's and save in a pdf file named by username.pdf
+    Make a pull request if you want to improve it.
     """
     parser = argparse.ArgumentParser(description)
     parser.add_argument("-u", "--Username", help = "To Query the Username")
