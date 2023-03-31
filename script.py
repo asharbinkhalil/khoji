@@ -1,12 +1,9 @@
-import os,shutil
-import requests
-import base64,time
-import argparse
-import img2pdf
+import os , shutil , requests, base64 , time
+import argparse, img2pdf
 from concurrent.futures import ThreadPoolExecutor
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-
+from tqdm import tqdm
 def linkToBase64(link):
     sample_string_bytes = link.encode("ascii")
     base64_bytes = base64.b64encode(sample_string_bytes)
@@ -15,6 +12,7 @@ def linkToBase64(link):
     return base64_string
 
 def func(username):
+    print("Downloading Bitmojis...")
     options = webdriver.ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     options.add_argument("--headless")
@@ -39,7 +37,7 @@ def func(username):
             link2 = "https://cf-st.sc-cdn.net/aps/snap_bitmoji/"+link+"._Fmpng"
             futures.append(pool.submit(download_bitmoji, link2, username, i))
 
-        for future in futures:
+        for future in tqdm(futures, total=count, desc='Making PDF from Bitmojis'):
             future.result()
 
     os.chdir(username)
@@ -56,11 +54,13 @@ def func(username):
     print("\t\t\tPrevious Bitmoji's of "+username+" are saved in "+username+".pdf")
 
 def download_bitmoji(link, username, i):
-    response = requests.get(link)
+    with requests.Session() as session:
+        response = session.get(link)
+        
     if response.status_code == 200:
         with open(username + "/picture" + str(i) + ".jpg", 'wb') as f:
             f.write(response.content)
-
+                 
 if __name__== "__main__":
     description = """
             ██╗  ██╗██╗  ██╗ ██████╗      ██╗██╗
@@ -76,8 +76,9 @@ if __name__== "__main__":
     parser = argparse.ArgumentParser(description)
     parser.add_argument("-u", "--Username", help = "To Query the Username")
     args = parser.parse_args()
+    print (description)
 
     if args.Username:
         start_time = time.time()
         func(args.Username)
-        print("Elapsed Time: ", time.time() - start_time, " seconds")
+        print("\t\t\tElapsed Time: ", time.time() - start_time, " seconds")
