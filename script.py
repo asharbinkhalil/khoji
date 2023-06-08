@@ -23,7 +23,7 @@ def func(username):
         shutil.rmtree(username, ignore_errors=False)
     os.makedirs(username)
     driver.get(initURL)
-    l = driver.find_element(By.CSS_SELECTOR, "#__next > div.UserProfile_desktopContainer__8OPO2 > main > div.DesktopUserProfile_desktopContainer__P1spp > div.UserCard_container__A4JCG > div.UserCard_bitmojiWrapperDesktop___UoFX > div > div.Bitmoji3DImage_webPImageWrapper__2iKuB.Bitmoji3DImage_avatarImageStyle__dry55 > picture")
+    l = driver.find_element(By.XPATH, "/html/body/div/div[1]/main/div[2]/div[1]/div[1]/div/div[1]/picture")
     l = l.find_element(By.CSS_SELECTOR, "source")
     link = l.get_attribute("srcset")
     count = int(link[link.index('_')+1:-11])
