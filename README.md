@@ -1,17 +1,10 @@
 # Snapchat-Bitmojis-Extractor
-```
 
-            ██╗  ██╗██╗  ██╗ ██████╗      ██╗██╗
-            ██║ ██╔╝██║  ██║██╔═══██╗     ██║██║
-            █████╔╝ ███████║██║   ██║     ██║██║
-            ██╔═██╗ ██╔══██║██║   ██║██   ██║██║
-            ██║  ██╗██║  ██║╚██████╔╝╚█████╔╝██║
-            ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚════╝ ╚═╝
-```
+![Alt text](image.png)
 
 I learned about this vulnerability from
 <br></br>
-(https://hatless1der.com/a-snapchat-osint-tip-viewing-bitmoji-changes/)
+[hatless1der.com](https://hatless1der.com/a-snapchat-osint-tip-viewing-bitmoji-changes/)
 <br></br>
 This is a brilliant discovery by Micah Hoffman and Sir Griffin.
 <br></br>
