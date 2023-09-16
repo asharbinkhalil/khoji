@@ -2,5 +2,4 @@ argparse==1.4.0
 base64==0.5.1
 img2pdf==0.4.4
 requests==2.26.0
-selenium==4.1.0
 tqdm==4.62.3
