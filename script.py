@@ -1,17 +1,10 @@
 import os
 import shutil
 import requests
-import base64
 import argparse
 from bs4 import BeautifulSoup  # Make sure to install BeautifulSoup
 from tqdm import tqdm
 
-def linkToBase64(link):
-    sample_string_bytes = link.encode("ascii")
-    base64_bytes = base64.b64encode(sample_string_bytes)
-    base64_string = base64_bytes.decode("ascii")
-    base64_string = base64_string.replace('=', '')
-    return base64_string
 
 def get_count(username):
     init_url = "https://www.snapchat.com/add/" + username
