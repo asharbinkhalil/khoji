@@ -3,8 +3,7 @@ import shutil
 import requests
 import base64
 import argparse
-import img2pdf
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup  # Make sure to install BeautifulSoup
 from tqdm import tqdm
 
 def linkToBase64(link):
@@ -14,7 +13,7 @@ def linkToBase64(link):
     base64_string = base64_string.replace('=', '')
     return base64_string
 
-def get_bitmoji_links(username):
+def get_count(username):
     init_url = "https://www.snapchat.com/add/" + username
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'}
@@ -26,11 +25,10 @@ def get_bitmoji_links(username):
             source_element = picture.find('source')
             if source_element:
                 srcset = source_element.get('srcset', '')
-                if srcset.startswith('https://images.bitmoji.com/3d/avatar/'):                    
-                    count = int(srcset[srcset.index('_')+1:-11])
-                    part1 = srcset[:srcset.index('_')]
-                    part2 = (srcset[-11:])
-        return count,part1,part2
+                if srcset.startswith('https://cf-st.sc-cdn.net/3d/render/'):
+                    count = srcset.split('_')[-1].split('-')[0]
+                    bid = srcset.split('/')[-1].split('-')[1].split('_')[0]
+        return count, bid
     else:
         print("Failed to fetch Bitmoji links. Status code:", response.status_code)
         return []
@@ -38,36 +36,35 @@ def get_bitmoji_links(username):
 def download_bitmoji(link, username, i):
     response = requests.get(link)
     if response.status_code == 200:
-        with open(username + "/picture" + str(i) + ".jpg", 'wb') as f:
+        with open(f"{username}/picture{i}.jpg", 'wb') as f:
             f.write(response.content)
 
 def func(username):
     print("Downloading Bitmojis...")
-    c,p1,p2 = get_bitmoji_links(username)
-    bitmojis_links=[]
-    for i in range(0, c):
-        link = linkToBase64(p1+'_'+str(i)+p2)
-        bitmojis_links.append(link)
+    c, bid = get_count(username)
+    bitmojis_links = []
+    for i in range(1, int(c)):
+        bitmojis_links.append(f'https://images.bitmoji.com/3d/avatar/201714142-{bid}_{i}-s5-v1.webp')
+
     print("Total Bitmojis:", c)
+
     if os.path.exists(username):
         shutil.rmtree(username, ignore_errors=False)
     os.makedirs(username)
 
     for i, link in enumerate(tqdm(bitmojis_links, desc='Downloading Bitmojis')):
-        link2 = "https://cf-st.sc-cdn.net/aps/snap_bitmoji/" + link + "._Fmpng"
-        download_bitmoji(link2, username, i)
+        download_bitmoji(link, username, i)
 
-    os.chdir(username)
-    images = [i for i in os.listdir(os.getcwd()) if i.endswith(".jpg")]
-    dpix = dpiy = 300
-    layout_fun = img2pdf.get_fixed_dpi_layout_fun((dpix, dpiy))
-    with open("../" + username + ".pdf", "wb") as f:
-        f.write(img2pdf.convert(images, layout_fun=layout_fun))
-    os.chdir("../")
-    shutil.rmtree(username, ignore_errors=False)
+    # Create a Markdown file to display images
+    markdown_file_path = f"{username}.md"
+    with open(markdown_file_path, "w") as md_file:
+        md_file.write(f"# Bitmojis for {username}\n\n")
+        for i in range(1, len(bitmojis_links) + 1):
+            md_file.write(f"![Bitmoji {i}](./{username}/picture{i}.jpg)\n")
+
     print("\t\t\tThank you for using khoji")
     print("\t\t\tPrevious Bitmoji's count is " + str(c))
-    print("\t\t\tPrevious Bitmoji's of " + username + " are saved in " + username + ".pdf")
+    print("\t\t\tPrevious Bitmoji's of " + username + " are saved in " + markdown_file_path)
 
 if __name__ == "__main__":
     description = """
@@ -77,7 +74,7 @@ if __name__ == "__main__":
             ██╔═██╗ ██╔══██║██║   ██║██   ██║██║
             ██║  ██╗██║  ██║╚██████╔╝╚█████╔╝██║
             ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚════╝ ╚═╝
-    This script gets all previous Bitmojis and saves them in a PDF file named by username.pdf
+    This script gets all previous Bitmojis and saves them in a Markdown file named by username.md
     Make a pull request if you want to improve it.
     """
     parser = argparse.ArgumentParser(description)
