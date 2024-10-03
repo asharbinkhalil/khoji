@@ -38,6 +38,8 @@ def func(username):
     bitmojis_links = []
     for i in range(1, int(c)):
         bitmojis_links.append(f'https://images.bitmoji.com/3d/avatar/201714142-{bid}_{i}-s5-v1.webp')
+        bitmojis_links.append(f'https://images.bitmoji.com/3d/avatar/582513516-{bid}_{i}-s5-v1.webp')
+        bitmojis_links.append(f'https://images.bitmoji.com/3d/avatar/452520973-{bid}_{i}-s5-v1.webp')
 
     print("Total Bitmojis:", c)
 
